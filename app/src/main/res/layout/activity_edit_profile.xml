@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".EditProfileActivity"
+    tools:context="com.openthedoor.EditProfileActivity"
     >
 
     <include
@@ -25,7 +25,7 @@
 
 
         android:background="#ffffff"
-        tools:context=".LoginActivity">
+        tools:context="com.openthedoor.LoginActivity">
 
 
         <android.support.design.widget.TextInputLayout

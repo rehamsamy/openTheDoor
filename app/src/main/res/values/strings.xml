@@ -6,8 +6,9 @@
     <string name="forgit_password">Forget Password ?</string>
     <string name="dont_have_account">Dont Have Account ?</string>
     <string name="sign_up">Sign Up</string>
-    <string name="name">Jhon Dao</string>
-    <string name="email">username@gmail.com</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="have_an_account">Have An Account? </string>
     <string name="confirm">Confirm password</string>
     <string name="verify">Verify</string>
     <string name="send_code">Send Code</string>
@@ -26,6 +27,7 @@
     <string name="edit_profile_date">Edit Profile Data</string>
     <string name="change_password">Change Password</string>
     <string name="save">Save</string>
+    <string name="contine">Continue</string>
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New password</string>
@@ -45,4 +47,8 @@
     <string name="cancel_service">Cancel Service</string>
     <string name="end_service">End Service</string>
     <string name="search">Search</string>
+    <string name="select_service">Select Service</string>
+    <string name="service_provider">Select Service Provider</string>
+    <string name="promo_code">Promo Code</string>
+    <string name="get_gift">Get your gift</string>
 </resources>

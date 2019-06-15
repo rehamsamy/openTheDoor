@@ -1,4 +1,4 @@
-package com.example.mohamed.splash;
+package com.openthedoor.mohamed.splash;
 
 import org.junit.Test;
 

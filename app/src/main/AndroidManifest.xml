@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mohamed.splash">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.openthedoor">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -15,9 +18,17 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="false"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:supportsRtl">
+        <activity android:name=".PromoCode"></activity>
+        <activity android:name=".ContactUs" />
+        <activity android:name=".AddReview" />
+        <activity android:name=".Reviews" />
+        <activity android:name=".ConfirmationActivity" />
+        <activity android:name=".SelectServiceProvider" />
+        <activity android:name=".SelectService" />
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,14 +48,15 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="API_KEY" />
 
-        <activity android:name=".ProfileActivity"
-            android:parentActivityName=".FindServiceActivity"/>
+        <activity
+            android:name=".ProfileActivity"
+            android:parentActivityName=".FindServiceActivity" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".ChangePasswordActivity" />
-        <activity android:name=".HistoryActivity"
-            android:parentActivityName=".FindServiceActivity"/>
-        <activity android:name=".popupWindow.InProcessPopUpActivity"
-           ></activity>
+        <activity
+            android:name=".HistoryActivity"
+            android:parentActivityName=".FindServiceActivity" />
+        <activity android:name=".popupWindow.InProcessPopUpActivity" />
     </application>
 
 </manifest>

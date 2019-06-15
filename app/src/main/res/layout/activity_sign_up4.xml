@@ -1,127 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".SignUp4Activity"
-    >
+    tools:context="com.openthedoor.SignUp4Activity">
 
-    <include
-        layout="@layout/app_bar"
-        android:id="@+id/toolbar"
-        >
-    </include>
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_gravity="center_vertical"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/changePass_app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="330dp"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
+        android:layout_height="wrap_content"
+        android:theme="@style/Base.ThemeOverlay.AppCompat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Platform.ThemeOverlay.AppCompat">
 
-        android:background="#ffffff"
-        tools:context=".LoginActivity">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/sign_up"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
+            <ImageView
+                android:id="@+id/signUp4_back_txtV_id"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="left|center_vertical"
+                android:background="@drawable/ic_arrow_back_black_24dp" />
 
-        <android.support.design.widget.TextInputLayout
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
 
-            android:id="@+id/phone"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_marginLeft="@dimen/margin_left"
-            android:layout_marginRight="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toRightOf="parent"
-            app:layout_constraintRight_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
-            android:layout_marginTop="60dp"
-            tools:ignore="MissingConstraints"
-            android:hint="@string/phone"
-            android:tooltipText="@string/phone"
-            >
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="50sp"
+            android:layout_marginEnd="20sp"
+            android:background="#ffffff"
+            android:padding="20dp"
+            tools:context="com.openthedoor.LoginActivity">
 
-            <EditText
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/phone_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/phone"
-                android:inputType="number"
-                android:drawablePadding="14dp"
-                android:drawableLeft="@drawable/signup_phone" />
+                android:layout_marginTop="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints">
 
-        </android.support.design.widget.TextInputLayout>
-
-
-
-
-
-        <Button
-            android:id="@+id/continu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_left"
-            android:layout_marginRight="@dimen/margin_left"
-            android:layout_marginTop="@dimen/margin_top"
-            android:background="@color/colorPrimary"
-            android:text="Continue"
-            android:textColor="#ffff"
-            app:layout_constraintLeft_toRightOf="parent"
-            app:layout_constraintRight_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phone" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/signup_phone"
+                    android:drawablePadding="10dp"
+                    android:hint="@string/phone"
+                    android:inputType="numberSigned" />
+            </android.support.design.widget.TextInputLayout>
 
 
-
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_left"
-            android:layout_marginRight="@dimen/margin_right"
-            android:layout_marginTop="@dimen/margin_top"
-            android:orientation="horizontal"
-            app:layout_constraintLeft_toRightOf="parent"
-            app:layout_constraintRight_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/continu">
-
-            <TextView
-                android:id="@+id/dont_have_account"
-                android:layout_width="wrap_content"
+            <android.support.design.button.MaterialButton
+                android:id="@+id/signUp1_btn_id"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/dont_have_account"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size" />
+                android:layout_marginTop="@dimen/margin_top"
+                android:background="@color/colorPrimary"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="@string/contine"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/phone_input_layout"
+                app:layout_constraintStart_toStartOf="@id/phone_input_layout"
+                app:layout_constraintTop_toBottomOf="@+id/phone_input_layout" />
 
-            <TextView
-                android:id="@+id/sign_up"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sign_up"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_size"
-                />
+        </android.support.constraint.ConstraintLayout>
 
-
-        </LinearLayout>
-
-
-    </android.support.constraint.ConstraintLayout>
-
-
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|fill_vertical"
-        android:layout_marginTop="78sp"
-        android:src="@drawable/login_icon"
-        android:id="@+id/cont"
-        />
-
+        <ImageView
+            android:id="@+id/login_icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal|fill_vertical"
+            android:src="@drawable/login_icon" />
+    </FrameLayout>
 
 
 </FrameLayout>

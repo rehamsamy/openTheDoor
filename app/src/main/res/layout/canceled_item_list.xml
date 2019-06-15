@@ -1,140 +1,112 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cons"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
     android:background="@drawable/border"
-    android:layout_margin="@dimen/margin_left"
-    android:padding="10dp"
-    android:id="@+id/cons"
-    >
+    android:padding="10dp">
 
     <ImageView
-        android:layout_width="40dp"
-        android:layout_height="60dp"
+        android:id="@+id/image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:src="@drawable/review_user_pic"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="parent"
-        android:id="@+id/image"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
         android:id="@+id/user_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginEnd="5dp"
         android:text="user name"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/image"
-        android:layout_marginTop="20sp"
-        android:layout_marginLeft="@dimen/margin_left"/>
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/image"
+        app:layout_constraintEnd_toStartOf="@id/canceledItem_ratingBar_id"
+        app:layout_constraintStart_toEndOf="@id/image"
+        app:layout_constraintTop_toTopOf="@id/image" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/image"
-        app:layout_constraintLeft_toRightOf="parent"
-        android:text="@string/service_type_text"
         android:id="@+id/service_type"
-        android:layout_marginTop="10dp"/>
-
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/service_type"
-        app:layout_constraintLeft_toRightOf="parent"
-        android:text="@string/finish_time_service"
+        android:layout_marginTop="5dp"
+        android:text="@string/service_type_text"
+        app:layout_constraintStart_toStartOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/image" />
+
+    <TextView
         android:id="@+id/time"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/time"
-        app:layout_constraintLeft_toRightOf="parent"
-        android:text="@string/finish_time_service_text"
+        android:layout_marginTop="5dp"
+        android:text="@string/finish_time_service"
+        app:layout_constraintStart_toStartOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/service_type" />
+
+    <TextView
         android:id="@+id/finish_time_service_text"
-        android:layout_marginTop="10dp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/finish_time_service_text"
+        app:layout_constraintStart_toStartOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/time" />
+
+    <RatingBar
+        android:id="@+id/canceledItem_ratingBar_id"
+        style="@style/Base.Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rating="4"
+        app:layout_constraintBottom_toBottomOf="@id/image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/image" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintRight_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/finish_time_service_text"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintStart_toStartOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/finish_time_service_text">
 
         <Button
-
             android:id="@+id/end_service"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20sp"
-            android:layout_weight="6"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
             android:background="@color/colorPrimary"
-            android:drawablePadding="20sp"
             android:text="Reorder Service"
-
-
-            />
+            android:textAllCaps="false" />
 
         <ImageView
-
             android:id="@+id/cancel_service"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:scaleType="fitXY"
             android:src="@drawable/cancel_service" />
 
     </LinearLayout>
 
 
     <ImageView
+        android:id="@+id/make_call"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
         android:src="@drawable/make_call"
-        app:layout_constraintRight_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="parent"
-        android:layout_marginRight="@dimen/margin_left"
-        android:id="@+id/make_call"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/time" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/make_call"
-        app:layout_constraintRight_toLeftOf="parent"
-        android:layout_marginBottom="40sp"
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_width="20sp"
-            android:layout_height="20sp"
-            android:src="@drawable/add_review_not_select"/>
-
-        <ImageView
-            android:layout_width="20sp"
-            android:layout_height="20sp"
-            android:src="@drawable/add_review_not_select"/>
-
-        <ImageView
-            android:layout_width="20sp"
-            android:layout_height="20sp"
-            android:src="@drawable/add_review_not_select"/>
-
-        <ImageView
-            android:layout_width="20sp"
-            android:layout_height="20sp"
-            android:src="@drawable/add_review_not_select"/>
-
-        <ImageView
-            android:layout_width="20sp"
-            android:layout_height="20sp"
-            android:src="@drawable/add_review_not_select"/>
-
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
