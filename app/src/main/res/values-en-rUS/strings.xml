@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">OpenTheDoor</string>
     <string name="phone">Phone</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign In</string>
@@ -8,7 +8,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
-    <string name="have_an_account">Have An Account? </string>
+    <string name="have_an_account">"Have An Account? "</string>
     <string name="confirm">Confirm password</string>
     <string name="verify">Verify</string>
     <string name="send_code">Send Code</string>
@@ -23,8 +23,6 @@
     <string name="notifications">Notifications</string>
     <string name="contact_us">Contact Us</string>
     <string name="about_company">About Company</string>
-    <string name="open" translatable="false">Open navigation drawer</string>
-    <string name="close" translatable="false">Close navigation drawer</string>
     <string name="edit_profile_date">Edit Profile Data</string>
     <string name="change_password">Change Password</string>
     <string name="save">Save</string>
@@ -44,7 +42,6 @@
     <string name="service_provider_info">Service Provider Info:</string>
     <string name="service_provider_info_text">10 hr</string>
     <string name="finish_time_service">Finished time of service:</string>
-    <string name="finish_time_service_text">01:50:23</string>
     <string name="cancel_service">Cancel Service</string>
     <string name="end_service">End Service</string>
     <string name="search">Search</string>
@@ -58,18 +55,14 @@
     <string name="card_number_text">Card Number</string>
     <string name="cardholder_name">CARDHOLDER Name</string>
     <string name="expire_date">EXPIRE DATE</string>
-    <string name="cvv" translatable="false">CVV</string>
-    <string name="cvv_text" translatable="false">1234</string>
-
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="save_card_information">Save Card Information</string>
     <string name="cancel_service_popUp">Cancel Service   00:45</string>
     <string name="confirm_now">Confirm Now</string>
     <string name="reorder_service">Reorder Service</string>
     <string name="hoursOfServiceProvider">Hours of service provider:</string>
-    <string name="given_bonous">Given bonous:</string>
+    <string name="given_bonous">Hours of service provider:</string>
     <string name="costOfServiceProvider">Cost of service provider:</string>
     <string name="discount">Discount:</string>
     <string name="total_cost">Total cost:</string>
-    <string name="minCharge">Minimum charge 100$, Maximum charge 1000$</string>
+    <string name="minCharge">Minimum charge 100$, Maximum charge 1000$Minimum charge 100$, Maximum charge 1000$</string>
 </resources>

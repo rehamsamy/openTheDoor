@@ -21,42 +21,89 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
-        <activity android:name=".PromoCode"></activity>
-        <activity android:name=".ContactUs" />
-        <activity android:name=".AddReview" />
-        <activity android:name=".Reviews" />
-        <activity android:name=".ConfirmationActivity" />
-        <activity android:name=".SelectServiceProvider" />
-        <activity android:name=".SelectService" />
-        <activity android:name=".SplashScreen">
+        <activity
+            android:name=".AddNewPayment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AboutCompany"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CancelService"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PromoCode"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ContactUs"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddReview"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Reviews"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ConfirmationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SelectServiceProvider"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SelectService"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SplashScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SignUp1Activity" />
-        <activity android:name=".SignUp2Activity" />
-        <activity android:name=".SignUp3Activity" />
-        <activity android:name=".SignUp4Activity" />
-        <activity android:name=".VerificationCodeActivity" />
-        <activity android:name=".ForgetPasswordActivity" />
-        <activity android:name=".FindServiceActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SignUp1Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SignUp2Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SignUp3Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SignUp4Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VerificationCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FindServiceActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="API_KEY" />
+            android:value="AIzaSyD9WTvRW8Q7HX6rOhPMz08kcDzGI86Fxy0" />
 
         <activity
             android:name=".ProfileActivity"
-            android:parentActivityName=".FindServiceActivity" />
-        <activity android:name=".EditProfileActivity" />
-        <activity android:name=".ChangePasswordActivity" />
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HistoryActivity"
-            android:parentActivityName=".FindServiceActivity" />
-        <activity android:name=".popupWindow.InProcessPopUpActivity" />
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
