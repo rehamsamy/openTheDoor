@@ -1,7 +1,6 @@
 package com.openthedoor.pojo;
 
 import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 
 
@@ -15,9 +14,6 @@ public class Request{
 
 	@SerializedName("url")
 	private Url url;
-
-	@SerializedName("body")
-	private Body body;
 
 	public void setMethod(String method){
 		this.method = method;
@@ -43,14 +39,6 @@ public class Request{
 		return url;
 	}
 
-	public void setBody(Body body){
-		this.body = body;
-	}
-
-	public Body getBody(){
-		return body;
-	}
-
 	@Override
  	public String toString(){
 		return 
@@ -58,7 +46,6 @@ public class Request{
 			"method = '" + method + '\'' + 
 			",header = '" + header + '\'' + 
 			",url = '" + url + '\'' + 
-			",body = '" + body + '\'' + 
 			"}";
 		}
 }

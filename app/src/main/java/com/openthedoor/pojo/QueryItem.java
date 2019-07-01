@@ -1,15 +1,7 @@
 package com.openthedoor.pojo;
 
-
-import com.google.gson.annotations.SerializedName;
-
-
 public class QueryItem{
-
-	@SerializedName("value")
 	private String value;
-
-	@SerializedName("key")
 	private String key;
 
 	public void setValue(String value){

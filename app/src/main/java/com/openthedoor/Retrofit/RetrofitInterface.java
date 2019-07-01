@@ -1,11 +1,12 @@
 package com.openthedoor.Retrofit;
 
-import com.openthedoor.pojo.ResponsePojo;
+import com.openthedoor.pojo.Query;
+import com.openthedoor.pojo.RegisterQuery;
 
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
-import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -22,14 +23,14 @@ public interface RetrofitInterface {
 
     @FormUrlEncoded
     @POST ("api/login")
-    Call<ResponsePojo> loginUser(@Field("email") String email, @Field("password") String password);
+    Call<List<Query>> loginUser(@FieldMap Map<String,String> map);
 
 
 
 
     @FormUrlEncoded
     @POST("api/{register}")
-    Call<ResponsePojo> registerUser(@Path("register") String register,@FieldMap Map<String,Object> map);
+    Call<RegisterQuery> registerUser(@Path("register") String register, @FieldMap Map<String,Object> map);
 
 
 }

@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.openthedoor.Retrofit.RetrofitInterface;
-import com.openthedoor.pojo.ResponsePojo;
+import com.openthedoor.pojo.RegisterQuery;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,18 +60,18 @@ public class SignUp4Activity extends AppCompatActivity {
                 map.put("confirmPassword","123456");
                 map.put("phone",phoneInput.getEditText().getText().toString());
 
-                Call<ResponsePojo>call= retrofitInterface.registerUser("register",map);
+                Call<RegisterQuery>call= retrofitInterface.registerUser("register",map);
 
-                call.enqueue(new Callback<ResponsePojo>() {
+                call.enqueue(new Callback<RegisterQuery>() {
                     @Override
-                    public void onResponse(Call<ResponsePojo> call, retrofit2.Response<ResponsePojo> response) {
+                    public void onResponse(Call<RegisterQuery> call, retrofit2.Response<RegisterQuery> response) {
                         Log.v("LoginActivity","rrrrrrrrrr"+response.body().toString());
                         Intent intent=new Intent(getApplicationContext(),FindServiceActivity.class);
                         startActivity(intent);
                     }
 
                     @Override
-                    public void onFailure(Call<ResponsePojo> call, Throwable t) {
+                    public void onFailure(Call<RegisterQuery> call, Throwable t) {
 
                     }
                 });

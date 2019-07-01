@@ -11,7 +11,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.openthedoor.Retrofit.RetrofitInterface;
-import com.openthedoor.pojo.ResponsePojo;
+import com.openthedoor.pojo.LoginResponse;
+import com.openthedoor.pojo.Query;
+
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,17 +82,20 @@ public class LoginActivity extends AppCompatActivity {
 
                 RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
 
-                Call<ResponsePojo> call=retrofitInterface.loginUser("user2@gmail.com","123456s");
+                Map<String ,String> map=new HashMap<>();
+                map.put("email","user2@gmail.com");
+                map.put("password","123456s");
+                Call<List<Query>> call=retrofitInterface.loginUser(map);
 
-                call.enqueue(new Callback<ResponsePojo>() {
+                call.enqueue(new Callback<List<Query>>() {
                     @Override
-                    public void onResponse(Call<ResponsePojo> call, retrofit2.Response<ResponsePojo> response) {
+                    public void onResponse(Call<List<Query>> call, retrofit2.Response<List<Query>> response) {
                         Log.v(TAG,"rrrrrrrrrr"+response.body());
 
                     }
 
                     @Override
-                    public void onFailure(Call<ResponsePojo> call, Throwable t) {
+                    public void onFailure(Call<List<Query>> call, Throwable t) {
                         Log.v(TAG,"errorrrrrrrr"+t.getMessage().toString()+phoneInput.getEditText().getText().toString());
 
                     }
