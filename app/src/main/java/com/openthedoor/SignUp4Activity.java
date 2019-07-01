@@ -58,14 +58,14 @@ public class SignUp4Activity extends AppCompatActivity {
                 map.put("password","123456");
                 map.put("email","reham@gmail.com");
                 map.put("confirmPassword","123456");
-                map.put("phone",phoneInput.getEditText().toString());
+                map.put("phone",phoneInput.getEditText().getText().toString());
 
                 Call<ResponsePojo>call= retrofitInterface.registerUser("register",map);
 
                 call.enqueue(new Callback<ResponsePojo>() {
                     @Override
                     public void onResponse(Call<ResponsePojo> call, retrofit2.Response<ResponsePojo> response) {
-                        Log.v("LoginActivity","rrrrrrrrrr"+response.code());
+                        Log.v("LoginActivity","rrrrrrrrrr"+response.body().toString());
                         Intent intent=new Intent(getApplicationContext(),FindServiceActivity.class);
                         startActivity(intent);
                     }
