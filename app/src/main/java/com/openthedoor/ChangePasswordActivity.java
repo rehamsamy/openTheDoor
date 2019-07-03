@@ -77,7 +77,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         int id=response.getUser().getId();
 
 
-        map.put("user_id",String.valueOf(id));
+        map.put("user_id",id);
         map.put("current_password",oldPassword);
         map.put("password_confirmation",newPassword);
         map.put("Password",confirmPassword);
