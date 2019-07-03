@@ -1,16 +1,19 @@
 package com.openthedoor.Retrofit;
 
-import com.openthedoor.pojo.Query;
-import com.openthedoor.pojo.RegisterQuery;
+import com.openthedoor.pojo.ChangePasswordResponse;
+import com.openthedoor.pojo.UserResponse;
 
-import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
+import retrofit2.http.Part;
+import retrofit2.http.QueryMap;
 
 public interface RetrofitInterface {
    // https://www.openthedoor.app/api/login
@@ -23,14 +26,33 @@ public interface RetrofitInterface {
 
     @FormUrlEncoded
     @POST ("api/login")
-    Call<List<Query>> loginUser(@FieldMap Map<String,String> map);
+    Call<UserResponse> loginUser(@FieldMap Map<String,String> map);
 
 
 
 
-    @FormUrlEncoded
-    @POST("api/{register}")
-    Call<RegisterQuery> registerUser(@Path("register") String register, @FieldMap Map<String,Object> map);
+
+    @Multipart
+    @POST("api/register")
+    Call<UserResponse> registerUser(@QueryMap Map<String, Object> map, @Part MultipartBody.Part file);
+   // Call<Response> uploadImage(@Part MultipartBody.Part image);
+
+    @POST("api/changepassword?")
+  Call<ChangePasswordResponse> changePassword(@QueryMap Map<String, Object> map);
+
+
+    @Multipart
+    @POST("api/updateprofile")
+    Call<UserResponse> updateProfile(@QueryMap Map<String, Object> map, @Part MultipartBody.Part file);
+
+
+
+    @GET("api/userinfo?")
+
+    Call<UserResponse> getUserInfo(@QueryMap Map<String, Object> map);
+
 
 
 }
+
+

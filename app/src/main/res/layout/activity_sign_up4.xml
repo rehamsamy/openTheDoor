@@ -94,6 +94,13 @@
                 app:layout_constraintStart_toStartOf="@id/phone_input_layout"
                 app:layout_constraintTop_toBottomOf="@+id/phone_input_layout" />
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/upload"
+                app:layout_constraintTop_toBottomOf="@+id/signUp1_btn_id"
+                android:src="@drawable/service_user_pic"/>
+
         </android.support.constraint.ConstraintLayout>
 
         <ImageView

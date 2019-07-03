@@ -9,10 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.openthedoor.Retrofit.RetrofitInterface;
-import com.openthedoor.pojo.LoginResponse;
-import com.openthedoor.pojo.Query;
+import com.openthedoor.pojo.User;
+import com.openthedoor.pojo.UserResponse;
 
 
 import java.util.HashMap;
@@ -23,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -32,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     Toolbar toolbar;
     TextView sign_up;
     TextView forget_password;
+    public static User user;
+   public static UserResponse userResponse;
    public static   final String baseUrl="https://www.openthedoor.app/";
 
    @BindView(R.id.phone_input_layout) TextInputLayout phoneInput;
@@ -82,25 +86,42 @@ public class LoginActivity extends AppCompatActivity {
 
                 RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
 
+                String phone=phoneInput.getEditText().getText().toString().trim();
+                String password=passwordInput.getEditText().getText().toString().trim();
                 Map<String ,String> map=new HashMap<>();
-                map.put("email","user2@gmail.com");
-                map.put("password","123456s");
-                Call<List<Query>> call=retrofitInterface.loginUser(map);
+//                map.put("email","user2@gmail.com");
+//                map.put("password","123456s");
 
-                call.enqueue(new Callback<List<Query>>() {
+                map.put("email",phone);
+                map.put("password",password);
+
+                Call<UserResponse> call=retrofitInterface.loginUser(map);
+
+                call.enqueue(new Callback<UserResponse>() {
                     @Override
-                    public void onResponse(Call<List<Query>> call, retrofit2.Response<List<Query>> response) {
-                        Log.v(TAG,"rrrrrrrrrr"+response.body());
+                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                         userResponse=response.body();
+                        user=userResponse.getUser();
+                        Boolean status=userResponse.isStatus();
+                        if(status==true){
+                            Intent intent=new Intent(LoginActivity.this,FindServiceActivity.class);
+                            intent.putExtra("user_data",user);
+                            Log.v(TAG,"eeeeeeeeeeeee"+user.getEmail());
+                            startActivity(intent);
+                        }
+                        else if(status==false) {
 
+                            Toast.makeText(getApplicationContext(),"make sure that your data is correct !!",Toast.LENGTH_LONG).show();
+                        }
+
+                        Log.v(TAG,"eeeeeeeeeeeee"+response.body().toString());
                     }
 
                     @Override
-                    public void onFailure(Call<List<Query>> call, Throwable t) {
-                        Log.v(TAG,"errorrrrrrrr"+t.getMessage().toString()+phoneInput.getEditText().getText().toString());
+                    public void onFailure(Call<UserResponse> call, Throwable t) {
 
                     }
                 });
-
 
             }
         });

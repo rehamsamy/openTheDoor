@@ -17,7 +17,6 @@ public class SignUp2Activity extends AppCompatActivity {
 
     MaterialButton signUp1_btn;
     TextView login_txtV;
-    Toolbar toolbar;
 
     @BindView(R.id.phone_input_layout) TextInputLayout nameInput;
     @BindView(R.id.confirm_password_input_layout) TextInputLayout emailInput;

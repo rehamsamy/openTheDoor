@@ -12,8 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SignUp3Activity extends AppCompatActivity {
-
-    Toolbar toolbar;
+ Toolbar toolbar;
     Button sign_up;
     String name,email;
     @BindView(R.id.confirm_password_input_layout) TextInputLayout confirmPasswordInput;
@@ -28,10 +27,10 @@ public class SignUp3Activity extends AppCompatActivity {
         name=intent.getStringExtra("name");
         email=intent.getStringExtra("email");
 
-        toolbar=(Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Sign Up");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        toolbar=(Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setTitle("Sign Up");
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         sign_up=(Button) findViewById(R.id.signUp1_btn_id);
 
         sign_up.setOnClickListener(new View.OnClickListener() {

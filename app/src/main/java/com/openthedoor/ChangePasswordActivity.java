@@ -2,14 +2,28 @@ package com.openthedoor;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.openthedoor.Retrofit.RetrofitInterface;
+import com.openthedoor.pojo.ChangePasswordResponse;
+import com.openthedoor.pojo.UserResponse;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
@@ -30,6 +44,14 @@ public class ChangePasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_password);
         ButterKnife.bind(this);
 
+
+       changrPassword();
+
+
+
+
+
+
     }
 
     @OnClick(R.id.changePass_back_txtV_id)
@@ -39,6 +61,54 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     @OnClick(R.id.changePass_btn_id)
     public void changrPassword() {
+
+        String oldPassword=oldPassword_ed.getText().toString();
+        String newPassword=newPassword_ed.getText().toString();
+        String confirmPassword=confirm_newPass_ed.getText().toString();
+
+        Retrofit retrofit=new Retrofit.Builder().baseUrl(LoginActivity.baseUrl)
+                .addConverterFactory(GsonConverterFactory.create()).build();
+
+        RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
+        Map<String,Object> map=new HashMap<>();
+        UserResponse response= LoginActivity.userResponse;
+
+        String token=  response.getToken();
+        int id=response.getUser().getId();
+
+
+        map.put("user_id",String.valueOf(id));
+        map.put("current_password",oldPassword);
+        map.put("password_confirmation",newPassword);
+        map.put("Password",confirmPassword);
+        map.put("api_token",token);
+
+
+        Call<ChangePasswordResponse> call=retrofitInterface.changePassword(map);
+
+        call.enqueue(new Callback<ChangePasswordResponse>() {
+            @Override
+            public void onResponse(Call<ChangePasswordResponse> call, Response<ChangePasswordResponse> response) {
+                ChangePasswordResponse response1=response.body();
+
+                Log.v("ChangePasswordActivity","passssss"+response.body().toString());
+
+                if(response1.isStatus()==true) {
+                    Toast.makeText(getApplicationContext(), response1.getMessages(), Toast.LENGTH_LONG).show();
+                }else if(response1.isStatus()==false){
+                    Toast.makeText(getApplicationContext(), response1.getMessages(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ChangePasswordResponse> call, Throwable t) {
+
+                Log.v("ChangePasswordActivity","passssss"+t.getMessage());
+
+            }
+        });
+
 
 
     }

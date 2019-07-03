@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.openthedoor.pojo.User;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -34,6 +36,17 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
+
+       // Intent intent=getIntent();
+       User user= LoginActivity.user;
+        String email=user.getEmail();
+      String name=  user.getName();
+      String phone= user.getPhone();
+
+
+        userEmail_txtV.setText(email);
+        userName_txtV.setText(name);
+        userPhone_txtV.setText(phone);
 
     }
 
