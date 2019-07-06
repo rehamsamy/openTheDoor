@@ -27,6 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
+    private static final String TAG ="ChangePasswordActivity" ;
     @BindView(R.id.changePass_back_txtV_id)
     ImageView back;
     @BindView(R.id.old_password_ed_id)
@@ -79,37 +80,31 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         map.put("user_id",id);
         map.put("current_password",oldPassword);
-        map.put("password_confirmation",newPassword);
-        map.put("Password",confirmPassword);
+        map.put("password_confirmation",confirmPassword);
+        map.put("Password", newPassword);
         map.put("api_token",token);
 
 
-        Call<ChangePasswordResponse> call=retrofitInterface.changePassword(map);
+    Call<ChangePasswordResponse> call=retrofitInterface.changePassword(map);
 
-        call.enqueue(new Callback<ChangePasswordResponse>() {
-            @Override
-            public void onResponse(Call<ChangePasswordResponse> call, Response<ChangePasswordResponse> response) {
-                ChangePasswordResponse response1=response.body();
-
-                Log.v("ChangePasswordActivity","passssss"+response.body().toString());
-
-                if(response1.isStatus()==true) {
-                    Toast.makeText(getApplicationContext(), response1.getMessages(), Toast.LENGTH_LONG).show();
-                }else if(response1.isStatus()==false){
-                    Toast.makeText(getApplicationContext(), response1.getMessages(), Toast.LENGTH_LONG).show();
-                }
-
+    call.enqueue(new Callback<ChangePasswordResponse>() {
+        @Override
+        public void onResponse(Call<ChangePasswordResponse> call, Response<ChangePasswordResponse> response) {
+            Log.v(TAG,"changeeee"+response.body().toString());
+            Boolean status=response.body().isStatus();
+            if(status==true){
+                Toast.makeText(getApplicationContext(),response.body().getMessages(),Toast.LENGTH_LONG).show();
             }
-
-            @Override
-            public void onFailure(Call<ChangePasswordResponse> call, Throwable t) {
-
-                Log.v("ChangePasswordActivity","passssss"+t.getMessage());
-
+            else if(status==false){
+                Toast.makeText(getApplicationContext(),response.body().getMessages(),Toast.LENGTH_LONG).show();
             }
-        });
+        }
 
-
+        @Override
+        public void onFailure(Call<ChangePasswordResponse> call, Throwable t) {
+            Log.v(TAG,"changeeee"+t.getMessage());
+        }
+    });
 
     }
 }

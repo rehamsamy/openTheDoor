@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,8 +24,18 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.openthedoor.Retrofit.RetrofitInterface;
+import com.openthedoor.pojo.FavPlacesResponse;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FindServiceActivity extends AppCompatActivity implements OnMapReadyCallback {
     NavigationView navigationView;
@@ -58,6 +69,8 @@ public class FindServiceActivity extends AppCompatActivity implements OnMapReady
                 startActivity(new Intent(FindServiceActivity.this, SelectService.class));
             }
         });
+
+      //  postAddFavPlaces();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
@@ -99,6 +112,7 @@ public class FindServiceActivity extends AppCompatActivity implements OnMapReady
                         break;
                     case R.id.notifications:
                         drawerLayout.closeDrawers();
+                        startActivity(new Intent(FindServiceActivity.this,NotificationActivity.class));
                         break;
                     default:
                 }
@@ -149,4 +163,44 @@ public class FindServiceActivity extends AppCompatActivity implements OnMapReady
         }
         return true;
     }
+
+
+   void postAddFavPlaces(){
+      Retrofit retrofit=new Retrofit.Builder().baseUrl(LoginActivity.baseUrl).
+              addConverterFactory(GsonConverterFactory.create())
+              .build();
+
+       RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
+
+       Map<String,Object> map=new HashMap<>();
+       map.put("fav_plac_title","home");
+       map.put("fav_plac_address","haram,giza,egypt");
+       map.put("fav_plac_long","5451.2312156161");
+       map.put("fav_plac_lat","5451.2312156161");
+//       map.put("user_id",LoginActivity.user.getId());
+//       map.put("api_token",LoginActivity.userResponse.getToken());
+
+
+      Call<FavPlacesResponse> call= retrofitInterface.addFavPlaces(map);
+
+      call.enqueue(new Callback<FavPlacesResponse>() {
+          @Override
+          public void onResponse(Call<FavPlacesResponse> call, Response<FavPlacesResponse> response) {
+              response.body().toString();
+              Log.v("FindServiceActivity","places sssss"+ response.body().toString());
+          }
+
+          @Override
+          public void onFailure(Call<FavPlacesResponse> call, Throwable t) {
+
+              Log.v("FindServiceActivity","places sssss"+ t.getMessage() );
+          }
+      });
+
+
+
+
+    }
+
+
 }

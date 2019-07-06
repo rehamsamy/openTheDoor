@@ -104,16 +104,16 @@ public class SignUp4Activity extends AppCompatActivity {
         RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
         Map<String,Object> map=new HashMap<>();
         String phone=phoneInput.getEditText().getText().toString().trim();
-        map.put("name","reham");
-        map.put("password","123456");
-        map.put("email","reham@gmail.com");
-        map.put("password_confirmation","123456");
+        map.put("name",name);
+        map.put("password",password);
+        map.put("email",email);
+        map.put("password_confirmation", confirmPassword);
         map.put("phone",phone);
 
-        //"https://www.openthedoor.app/images/users/user/1562061634.add_image2.png"
+        String path="https://www.openthedoor.app/images/users/user/1562061634.add_image2.png";
 
 //        File file=new File(path);
-        final RequestBody requestBody=RequestBody.create(MediaType.parse("image/jpeg"),imageBytes);
+        final RequestBody requestBody=RequestBody.create(MediaType.parse("image/jpeg"),path);
         MultipartBody.Part part=MultipartBody.Part.createFormData("image", "user_image",requestBody);
         RequestBody desc=RequestBody.create(MediaType.parse("multipart/form-data"),"image-type");
 

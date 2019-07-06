@@ -21,7 +21,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
-
         <activity
             android:name=".AddNewPayment"
             android:screenOrientation="portrait" />
@@ -58,13 +57,11 @@
         <activity
             android:name=".SplashScreen"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".LoginActivity"
@@ -81,8 +78,6 @@
         <activity
             android:name=".SignUp4Activity"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name=".VerificationCodeActivity"
             android:screenOrientation="portrait" />
@@ -109,6 +104,7 @@
         <activity
             android:name=".HistoryActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".NotificationActivity"></activity>
     </application>
 
 </manifest>

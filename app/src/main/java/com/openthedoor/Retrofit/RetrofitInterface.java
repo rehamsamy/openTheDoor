@@ -1,6 +1,10 @@
 package com.openthedoor.Retrofit;
 
 import com.openthedoor.pojo.ChangePasswordResponse;
+import com.openthedoor.pojo.DeleteNotificatioResponse;
+import com.openthedoor.pojo.FavPlacesResponse;
+import com.openthedoor.pojo.GeneralNotificationResponse;
+import com.openthedoor.pojo.UserNotificationResponse;
 import com.openthedoor.pojo.UserResponse;
 
 import java.util.Map;
@@ -37,7 +41,7 @@ public interface RetrofitInterface {
     Call<UserResponse> registerUser(@QueryMap Map<String, Object> map, @Part MultipartBody.Part file);
    // Call<Response> uploadImage(@Part MultipartBody.Part image);
 
-    @POST("api/changepassword?")
+    @POST("api/changepassword")
   Call<ChangePasswordResponse> changePassword(@QueryMap Map<String, Object> map);
 
 
@@ -52,6 +56,22 @@ public interface RetrofitInterface {
     Call<UserResponse> getUserInfo(@QueryMap Map<String, Object> map);
 
 
+    @POST("api/addfavplaces")
+    Call<FavPlacesResponse> addFavPlaces(@QueryMap Map<String, Object> map);
+
+
+
+    @GET("api/getgeneralnotfication")
+    Call<GeneralNotificationResponse> getGeneralNotification(@QueryMap Map<String, Object> map);
+
+
+    @GET("api/usernotfication")
+    Call<UserNotificationResponse> getUserNotification(@QueryMap Map<String, Object> map);
+
+
+
+    @POST("api/deleteusernotfication")
+    Call<DeleteNotificatioResponse> deleteUserNotification(@QueryMap Map<String, Object> map);
 
 }
 
