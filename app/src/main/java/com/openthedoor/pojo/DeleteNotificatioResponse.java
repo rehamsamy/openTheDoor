@@ -1,6 +1,12 @@
 package com.openthedoor.pojo;
 
+
+import com.google.gson.annotations.SerializedName;
+
+
 public class DeleteNotificatioResponse{
+
+	@SerializedName("SuccessMsg")
 	private String successMsg;
 
 	public void setSuccessMsg(String successMsg){

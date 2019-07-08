@@ -23,6 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"
         android:id="@+id/notify_time"
+        android:textColor="#696c6c"
         android:text="2 min ago"/>
 
 </android.support.constraint.ConstraintLayout>
