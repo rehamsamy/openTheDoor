@@ -56,17 +56,18 @@ public class AddReview extends AppCompatActivity {
         if(intent==null){
             return;
         }else {
-
             ReviewsItem item = intent.getParcelableExtra("review_model");
             review = item.getNotes();
             userName_txtV.setText(item.getUserName());
-            review_ed.setMaxLines(6);
+            review_ed.setMaxLines(10);
             review_ed.setText(review);
+           final String rev=review_ed.getText().toString();
+
 
             add_review_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    editReview(review);
+                    editReview(rev);
                 }
             });
         }
@@ -128,6 +129,7 @@ public class AddReview extends AppCompatActivity {
       call.enqueue(new Callback<EditReviewResponse>() {
           @Override
           public void onResponse(Call<EditReviewResponse> call, Response<EditReviewResponse> response) {
+              Log.v(TAG,"edit reviewwwww"+response.body().toString());
               Toast.makeText(getApplicationContext(),""+response.body().getSuccessMsg(),Toast.LENGTH_LONG).show();
           }
 
