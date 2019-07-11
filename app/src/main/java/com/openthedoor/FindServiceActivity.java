@@ -108,7 +108,7 @@ public class FindServiceActivity extends AppCompatActivity implements OnMapReady
                         break;
                     case R.id.promocode:
                         drawerLayout.closeDrawers();
-                        startActivity(new Intent(FindServiceActivity.this, PromoCode.class));
+                        startActivity(new Intent(FindServiceActivity.this, AddReview.class));
                         break;
                     case R.id.notifications:
                         drawerLayout.closeDrawers();

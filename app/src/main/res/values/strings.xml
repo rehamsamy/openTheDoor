@@ -74,4 +74,6 @@
     <string name="minCharge">Minimum charge 100$, Maximum charge 1000$</string>
     <string name="notification">Notifications</string>
     <string name="notify_message_info">The service provider arrives now.</string>
+    <string name="edit_review">Edit Review</string>
+    <string name="delete_review">Delete Review</string>
 </resources>

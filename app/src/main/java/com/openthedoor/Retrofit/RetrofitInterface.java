@@ -1,7 +1,12 @@
 package com.openthedoor.Retrofit;
 
+import com.openthedoor.AddReview;
+import com.openthedoor.pojo.AddReviewResponse;
+import com.openthedoor.pojo.AllReviewsResponse;
 import com.openthedoor.pojo.ChangePasswordResponse;
 import com.openthedoor.pojo.DeleteNotificatioResponse;
+import com.openthedoor.pojo.DeleteReviewResponse;
+import com.openthedoor.pojo.EditReviewResponse;
 import com.openthedoor.pojo.FavPlacesResponse;
 import com.openthedoor.pojo.GeneralNotificationResponse;
 import com.openthedoor.pojo.UserNotificationResponse;
@@ -17,6 +22,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface RetrofitInterface {
@@ -42,7 +48,11 @@ public interface RetrofitInterface {
    // Call<Response> uploadImage(@Part MultipartBody.Part image);
 
     @POST("api/changepassword")
-  Call<ChangePasswordResponse> changePassword(@QueryMap Map<String, Object> map);
+  Call<ChangePasswordResponse> changePassword(@Query("user_id") int id,
+                                              @Query("current_password") String old,
+                                              @Query("password_confirmation")String confirm,
+                                              @Query("password")String Password,
+                                              @Query("api_token")String api_token) ;
 
 
     @Multipart
@@ -73,6 +83,21 @@ public interface RetrofitInterface {
     @POST("api/deleteusernotfication")
     Call<DeleteNotificatioResponse> deleteUserNotification(@QueryMap Map<String, Object> map);
 
+
+
+    @GET("api/getallreview")
+    Call<AllReviewsResponse> getAllReviews(@QueryMap Map<String,Object> map);
+
+
+    @POST("api/addreview")
+    Call<AddReviewResponse>  addReview(@QueryMap Map<String,Object> map);
+
+
+    @POST("api/deletereview")
+    Call<DeleteReviewResponse> deleteReview(@QueryMap Map<String,Object> map);
+
+    @POST("api/editreview")
+    Call<EditReviewResponse> editReview(@QueryMap Map<String,Object> map);
 }
 
 

@@ -122,7 +122,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/review_user_pic_withframe" />
+                android:src="@drawable/review_user_pic_withframe"
+                android:id="@+id/user_image"/>
 
         </FrameLayout>
 

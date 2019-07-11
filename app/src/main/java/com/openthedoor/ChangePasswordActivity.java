@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.openthedoor.Retrofit.RetrofitClientInstance;
 import com.openthedoor.Retrofit.RetrofitInterface;
 import com.openthedoor.pojo.ChangePasswordResponse;
 import com.openthedoor.pojo.UserResponse;
@@ -67,25 +68,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
         String newPassword=newPassword_ed.getText().toString();
         String confirmPassword=confirm_newPass_ed.getText().toString();
 
-        Retrofit retrofit=new Retrofit.Builder().baseUrl(LoginActivity.baseUrl)
-                .addConverterFactory(GsonConverterFactory.create()).build();
 
-        RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
-        Map<String,Object> map=new HashMap<>();
+       // Map<String,String> map=new HashMap<>();
         UserResponse response= LoginActivity.userResponse;
 
         String token=  response.getToken();
         int id=response.getUser().getId();
 
-
-        map.put("user_id",id);
-        map.put("current_password",oldPassword);
-        map.put("password_confirmation",confirmPassword);
-        map.put("Password", newPassword);
-        map.put("api_token",token);
-
-
-    Call<ChangePasswordResponse> call=retrofitInterface.changePassword(map);
+    Call<ChangePasswordResponse> call= RetrofitClientInstance.getRetrofitInstance().changePassword(id,
+            oldPassword,confirmPassword,newPassword,token);
 
     call.enqueue(new Callback<ChangePasswordResponse>() {
         @Override

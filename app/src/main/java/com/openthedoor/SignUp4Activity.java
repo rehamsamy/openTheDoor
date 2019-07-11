@@ -16,8 +16,12 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.openthedoor.Retrofit.RetrofitClientInstance;
 import com.openthedoor.Retrofit.RetrofitInterface;
+import com.openthedoor.pojo.Messages;
+import com.openthedoor.pojo.RegisterProblemResponse;
 import com.openthedoor.pojo.UserResponse;
 
 import java.io.ByteArrayOutputStream;
@@ -98,10 +102,7 @@ public class SignUp4Activity extends AppCompatActivity {
     }
 
     private void uploadImage(byte[] imageBytes) {
-        Retrofit retrofit=new Retrofit.Builder().baseUrl(LoginActivity.baseUrl)
-                .addConverterFactory(GsonConverterFactory.create()).build();
 
-        RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
         Map<String,Object> map=new HashMap<>();
         String phone=phoneInput.getEditText().getText().toString().trim();
         map.put("name",name);
@@ -109,6 +110,7 @@ public class SignUp4Activity extends AppCompatActivity {
         map.put("email",email);
         map.put("password_confirmation", confirmPassword);
         map.put("phone",phone);
+        map.put("user_image",null);
 
         String path="https://www.openthedoor.app/images/users/user/1562061634.add_image2.png";
 
@@ -117,7 +119,7 @@ public class SignUp4Activity extends AppCompatActivity {
         MultipartBody.Part part=MultipartBody.Part.createFormData("image", "user_image",requestBody);
         RequestBody desc=RequestBody.create(MediaType.parse("multipart/form-data"),"image-type");
 
-        Call<UserResponse> call = retrofitInterface.registerUser(map,part);
+        Call<UserResponse> call = RetrofitClientInstance.getRetrofitInstance().registerUser(map,part);
 
         call.enqueue(new Callback<UserResponse>() {
 
@@ -125,16 +127,19 @@ public class SignUp4Activity extends AppCompatActivity {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
 
                 Log.v("LoginActivity","rrrrrrrrrr"+response.body().toString());
-
-                if (response.isSuccessful()) {
-
+                  Boolean status=response.body().isStatus();
+                if (status==true) {
                     UserResponse responseBody = response.body();
-                   // Log.v(TAG,"rrrrrrrrrrrrrrrrr"+requestBody.toString());
+                    Log.v(TAG,"rrrrrrrrrrrrrrrrr"+responseBody.toString());
                     Intent intent=new Intent(getApplicationContext(),FindServiceActivity.class);
                     startActivity(intent);
                 }
+                else if(status==false){
+
+                    Toast.makeText(getApplicationContext(),"error",Toast.LENGTH_LONG).show();
 
 
+                }
 
             }
 

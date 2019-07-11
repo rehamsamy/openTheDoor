@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.openthedoor.Retrofit.RetrofitClientInstance;
 import com.openthedoor.Retrofit.RetrofitInterface;
 import com.openthedoor.pojo.UserResponse;
 
@@ -65,11 +66,7 @@ public class EditProfileActivity extends AppCompatActivity {
     @OnClick(R.id.save_editing_btn)
     public void saveData() {
 
-        Retrofit retrofit=new Retrofit.Builder().baseUrl(LoginActivity.baseUrl)
-                .addConverterFactory(GsonConverterFactory.create()).build();
-
-        RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
-        Map<String,Object> map=new HashMap<>();
+         Map<String,Object> map=new HashMap<>();
 
         String userName=userName_ed.getText().toString();
         String userEmail=userEmail_ed.getText().toString();
@@ -92,7 +89,7 @@ public class EditProfileActivity extends AppCompatActivity {
         MultipartBody.Part part=MultipartBody.Part.createFormData("user_image", "name",requestBody);
         RequestBody desc=RequestBody.create(MediaType.parse("multipart/form-data"),"image-type");
 
-        Call<UserResponse> call = retrofitInterface.updateProfile(map,part);
+        Call<UserResponse> call = RetrofitClientInstance.getRetrofitInstance().updateProfile(map,part);
 
         call.enqueue(new Callback<UserResponse>() {
 
