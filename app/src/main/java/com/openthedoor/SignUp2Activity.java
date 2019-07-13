@@ -34,8 +34,8 @@ public class SignUp2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getApplicationContext(), SignUp3Activity.class);
-                intent.putExtra("name",nameInput.getEditText().toString().trim());
-                intent.putExtra("email",emailInput.getEditText().toString().trim());
+                intent.putExtra("name",nameInput.getEditText().getText().toString().trim());
+                intent.putExtra("email",emailInput.getEditText().getText().toString().trim());
                 startActivity(intent);
 
             }

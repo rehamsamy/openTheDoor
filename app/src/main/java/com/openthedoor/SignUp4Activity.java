@@ -75,14 +75,6 @@ public class SignUp4Activity extends AppCompatActivity {
 
 
 
-        continu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                uploadImage(bytes);
-            }
-        });
 
 
         uploadImage.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +91,21 @@ public class SignUp4Activity extends AppCompatActivity {
 
         });
 
+
+        continu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                try {
+                    uploadImage(getBytes(inputStream));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
     }
 
     private void uploadImage(byte[] imageBytes) {
@@ -106,18 +113,19 @@ public class SignUp4Activity extends AppCompatActivity {
         Map<String,Object> map=new HashMap<>();
         String phone=phoneInput.getEditText().getText().toString().trim();
         map.put("name",name);
-        map.put("password",password);
         map.put("email",email);
-        map.put("password_confirmation", confirmPassword);
         map.put("phone",phone);
-        map.put("user_image",null);
+        map.put("password",password);
+        map.put("password_confirmation", confirmPassword);
+
+        Log.v("LoginActivity","rrrrrrrrrr"+"\n"+name+"\n"+email+"\n"+password+"\n"+confirmPassword+"\n"+phone);
+
 
         String path="https://www.openthedoor.app/images/users/user/1562061634.add_image2.png";
 
-//        File file=new File(path);
-        final RequestBody requestBody=RequestBody.create(MediaType.parse("image/jpeg"),path);
-        MultipartBody.Part part=MultipartBody.Part.createFormData("image", "user_image",requestBody);
-        RequestBody desc=RequestBody.create(MediaType.parse("multipart/form-data"),"image-type");
+        final RequestBody requestBody=RequestBody.create(MediaType.parse("image/jpeg"),imageBytes);
+        MultipartBody.Part part=MultipartBody.Part.createFormData("image", "image.jpeg",requestBody);
+
 
         Call<UserResponse> call = RetrofitClientInstance.getRetrofitInstance().registerUser(map,part);
 
@@ -167,7 +175,8 @@ public class SignUp4Activity extends AppCompatActivity {
             try {
                 inputStream=getContentResolver().openInputStream(data.getData());
 
-                 bytes=  getBytes(inputStream);
+                 uploadImage(getBytes(inputStream));
+
                 bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(),image);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -188,26 +197,12 @@ public class SignUp4Activity extends AppCompatActivity {
             byteBuff.write(buff, 0, len);
         }
 
+        Log.v("LoginActivity","rrrrrrrrrr"+byteBuff.toByteArray());
         return byteBuff.toByteArray();
     }
 
 
 
 
-    private String getPathFromUri(Uri uri){
 
-        String[] projection={MediaStore.Images.Media.DATA};
-        CursorLoader loader=new CursorLoader(getApplicationContext(),uri,projection,null,null,null);
-
-        Cursor cursor=loader.loadInBackground();
-
-        int column=cursor.getColumnIndex(MediaStore.Images.Media.DATA);
-
-        cursor.moveToFirst();
-        String result=cursor.getString(column);
-        cursor.close();
-        return result;
-
-
-    }
 }

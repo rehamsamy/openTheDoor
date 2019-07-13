@@ -47,6 +47,8 @@ public interface RetrofitInterface {
     Call<UserResponse> registerUser(@QueryMap Map<String, Object> map, @Part MultipartBody.Part file);
    // Call<Response> uploadImage(@Part MultipartBody.Part image);
 
+
+
     @POST("api/changepassword")
   Call<ChangePasswordResponse> changePassword(@Query("user_id") int id,
                                               @Query("current_password") String old,

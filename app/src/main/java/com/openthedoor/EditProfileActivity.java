@@ -81,11 +81,7 @@ public class EditProfileActivity extends AppCompatActivity {
         map.put("phone",userPhone);
         map.put("api_token",token);
         map.put("user_id",userResponse.getUser().getId());
-
-        //"https://www.openthedoor.app/images/users/user/1562061634.add_image2.png"
-
-//        File file=new File(path);
-        final RequestBody requestBody=RequestBody.create(MediaType.parse("image/jpeg"),"https://www.openthedoor.app/images/users/user/1562061634.add_image2.png");
+       final RequestBody requestBody=RequestBody.create(MediaType.parse("image/jpeg"),"https://www.openthedoor.app/images/users/user/1562061634.add_image2.png");
         MultipartBody.Part part=MultipartBody.Part.createFormData("user_image", "name",requestBody);
         RequestBody desc=RequestBody.create(MediaType.parse("multipart/form-data"),"image-type");
 

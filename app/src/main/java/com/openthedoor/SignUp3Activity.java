@@ -37,8 +37,8 @@ public class SignUp3Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getApplicationContext(),SignUp4Activity.class);
-                intent.putExtra("password",passwordInput.getEditText().toString());
-                intent.putExtra("confirmPassword",confirmPasswordInput.getEditText().toString());
+                intent.putExtra("password",passwordInput.getEditText().getText().toString());
+                intent.putExtra("confirmPassword",confirmPasswordInput.getEditText().getText().toString());
                 intent.putExtra("name",name);
                 intent.putExtra("email",email);
                 startActivity(intent);
