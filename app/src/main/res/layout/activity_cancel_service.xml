@@ -80,7 +80,8 @@
             android:layout_height="2dp"
             android:layout_marginTop="@dimen/margin_top"
             android:background="@color/colorPrimary"
-            app:layout_constraintTop_toBottomOf="@+id/cancel_service_reasons_ed" />
+            app:layout_constraintTop_toBottomOf="@+id/cancel_service_reasons_ed"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/cancel_service_button"

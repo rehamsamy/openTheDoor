@@ -1,14 +1,19 @@
 package com.openthedoor.Retrofit;
 
 import com.openthedoor.AddReview;
+import com.openthedoor.HistoryActivity;
 import com.openthedoor.pojo.AddReviewResponse;
 import com.openthedoor.pojo.AllReviewsResponse;
+import com.openthedoor.pojo.CancellServiceResponse;
 import com.openthedoor.pojo.ChangePasswordResponse;
 import com.openthedoor.pojo.DeleteNotificatioResponse;
 import com.openthedoor.pojo.DeleteReviewResponse;
 import com.openthedoor.pojo.EditReviewResponse;
 import com.openthedoor.pojo.FavPlacesResponse;
 import com.openthedoor.pojo.GeneralNotificationResponse;
+import com.openthedoor.pojo.HistoryResponse;
+import com.openthedoor.pojo.NotesResponse;
+import com.openthedoor.pojo.ReportProblemResponse;
 import com.openthedoor.pojo.UserNotificationResponse;
 import com.openthedoor.pojo.UserResponse;
 
@@ -26,13 +31,6 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface RetrofitInterface {
-   // https://www.openthedoor.app/api/login
-
-   // "https://www.openthedoor.app/api/login?email=adel@gmail.com&password=123456"
-
-
-   // "https://www.openthedoor.app/api/login?email=user2@gmail.com&password=123456s"
-
 
     @FormUrlEncoded
     @POST ("api/login")
@@ -100,6 +98,20 @@ public interface RetrofitInterface {
 
     @POST("api/editreview")
     Call<EditReviewResponse> editReview(@QueryMap Map<String,Object> map);
+
+    @GET("api/getuserservicehistory")
+    Call<HistoryResponse> getServiceHistory(@QueryMap Map<String,Object> map);
+
+    @POST("api/sendprovidernotes")
+    Call<NotesResponse> sendProviderNotes(@QueryMap Map<String,Object> map);
+
+    @POST("api/sendproblemreport")
+    Call<ReportProblemResponse> sendReportProblem(@QueryMap Map<String,Object> map);
+
+
+    @POST("api/cancelservice")
+    Call<CancellServiceResponse> cancelService(@QueryMap Map<String,Object> map);
+
 }
 
 

@@ -1,8 +1,12 @@
 package com.openthedoor;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -18,10 +22,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.Api;
+import com.google.android.gms.location.FusedLocationProviderApi;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -32,6 +38,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -39,10 +46,16 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.openthedoor.Retrofit.RetrofitInterface;
 import com.openthedoor.pojo.FavPlacesResponse;
+import com.openthedoor.utils.CurrentLocation;
+import com.openthedoor.utils.DialogUtil;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,20 +64,19 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FindServiceActivity extends AppCompatActivity implements OnMapReadyCallback
-,LocationListener,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener{
+{
     private static final String TAG ="FindServiceActivity" ;
+    private static final int LOCATION_REQUEST_CODE =1 ;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
     android.support.v7.widget.Toolbar toolbar;
-
-    MapView mapView;
-    GoogleMap googleMap;
-    GoogleApiClient googleApiClient;
-    LocationRequest locationRequest;
-    Location lastLocation;
-    Marker currentMarker;
     Button findService_btn;
+    @BindView(R.id.current_location) TextView current_location_txv;
+
+
+      GoogleMap googleMap;
+      int flag=0;
 
 
     @Override
@@ -72,6 +84,7 @@ public class FindServiceActivity extends AppCompatActivity implements OnMapReady
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_service);
 
+        ButterKnife.bind(this);
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -89,22 +102,11 @@ public class FindServiceActivity extends AppCompatActivity implements OnMapReady
                 startActivity(new Intent(FindServiceActivity.this, SelectService.class));
             }
         });
-
-      //  postAddFavPlaces();
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
 
-        mapView = (MapView) findViewById(R.id.map_view);
 
-
-        if (mapView != null) {
-            mapView.onCreate(null);
-            mapView.onResume();
-            mapView.getMapAsync(this);
-
-        }
-
+        init();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -140,7 +142,12 @@ public class FindServiceActivity extends AppCompatActivity implements OnMapReady
                 return true;
             }
         });
+
+
     }
+
+
+
 
     @Override
     public void onBackPressed() {
@@ -152,29 +159,6 @@ public class FindServiceActivity extends AppCompatActivity implements OnMapReady
         }
     }
 
-
-    @Override
-    public void onMapReady(GoogleMap googleMap1) {
-        MapsInitializer.initialize(getApplicationContext());
-        googleMap = googleMap1;
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION )!=PackageManager.PERMISSION_GRANTED &&ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
-
-            buildGoogleApi();
-            googleMap.setMyLocationEnabled(true);
-
-        }
-
-
-    }
-
-    protected synchronized void buildGoogleApi(){
-        googleApiClient=new GoogleApiClient.Builder(this).addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API).build();
-        googleApiClient.connect();
-
-
-    }
 
     @OnClick(R.id.log_out_sidemenu)
     void logOut() {
@@ -211,11 +195,7 @@ public class FindServiceActivity extends AppCompatActivity implements OnMapReady
        map.put("fav_plac_address","haram,giza,egypt");
        map.put("fav_plac_long","5451.2312156161");
        map.put("fav_plac_lat","5451.2312156161");
-//       map.put("user_id",LoginActivity.user.getId());
-//       map.put("api_token",LoginActivity.userResponse.getToken());
-
-
-      Call<FavPlacesResponse> call= retrofitInterface.addFavPlaces(map);
+     Call<FavPlacesResponse> call= retrofitInterface.addFavPlaces(map);
 
       call.enqueue(new Callback<FavPlacesResponse>() {
           @Override
@@ -230,67 +210,87 @@ public class FindServiceActivity extends AppCompatActivity implements OnMapReady
               Log.v("FindServiceActivity","places sssss"+ t.getMessage() );
           }
       });
+      }
 
-
-
-
-    }
 
 
     @Override
-    public void onLocationChanged(Location location) {
-        lastLocation=location;
-        Log.v(TAG,"locationnnnnnnn"+lastLocation.toString());
-        if(currentMarker!=null){
-            currentMarker.remove();
+    public void onMapReady(GoogleMap googleMap1) {
+        googleMap=googleMap1;
+        DialogUtil.showMaterialDialog(this,getString(R.string.reminding),getString(R.string.reminding_content),
+                getString(R.string.pos_mess),getString(R.string.neg_mess),null,null);
+       CurrentLocation currentLocation= new CurrentLocation(googleMap,getApplicationContext(),current_location_txv);
+
+
+        googleMap.setOnMyLocationButtonClickListener(currentLocation.onMyLocationButtonClickListener);
+        CurrentLocation.enableMyLocationIfPermitted();
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.setMinZoomPreference(10);
+        googleMap.setOnMyLocationChangeListener(currentLocation.onMyLocationChangeListener);
+
+    }
+
+    private void init(){
+        SupportMapFragment mapFragment=(SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+
+    private void enableMyLocationIfPermitted() {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION},LOCATION_REQUEST_CODE);
         }
-        LatLng latLng=new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
-        MarkerOptions markerOptions=new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("my current location");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        currentMarker=googleMap.addMarker(markerOptions);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        googleMap.animateCamera(CameraUpdateFactory.zoomBy(17));
-        Toast.makeText(this, "lat"+latLng, Toast.LENGTH_LONG).show();
-        Log.v(TAG,"locationnnnnnnn"+lastLocation.toString());
-        if(googleApiClient!=null){
-            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);
+
+        else if(googleMap!=null){
+            googleMap.setMyLocationEnabled(true);
         }
 
     }
 
 
-    @Override
-    public void onConnected(Bundle bundle) {
-        locationRequest=new LocationRequest();
-        locationRequest.setInterval(1100);
-        locationRequest.setFastestInterval(1100);
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient,locationRequest,this);
+    private GoogleMap.OnMyLocationButtonClickListener locationButtonClickListener=
+            new GoogleMap.OnMyLocationButtonClickListener() {
+                @Override
+                public boolean onMyLocationButtonClick() {
+                    googleMap.setMaxZoomPreference(15);
+                    Log.i(TAG,"location on Buttion listener");
+                    return true;
+                }
+            };
 
 
-        getCurrentLocation();
-    }
+    private GoogleMap.OnMyLocationChangeListener locationChangeListener=new GoogleMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            if(flag==0){
+                googleMap.clear();
+                Geocoder geocoder=new Geocoder(FindServiceActivity.this);
+                List<Address> addresses=null;
+                try {
+                    addresses=geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-    private void getCurrentLocation() {
+                String address=addresses.get(0).getAddressLine(0);
 
-    }
+                Log.v(TAG,"adddddddddd"+address);
+               current_location_txv.setText(address);
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(),location.getLongitude()))
+                        .title(getString(R.string.current_location_map)).icon(BitmapDescriptorFactory.defaultMarker()));
 
-    @Override
-    public void onConnectionSuspended(int i) {
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(),location.getLongitude())));
 
-    }
+                flag=1;
+            }
+            else {
+                Log.v(TAG,"add error");
+            }
+        }
+    };
 
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
 
-    }
-
-    @Override
-    protected void onStart() {
-        googleApiClient.connect();
-        super.onStart();
-
-    }
 }

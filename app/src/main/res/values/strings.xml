@@ -76,4 +76,19 @@
     <string name="notify_message_info">The service provider arrives now.</string>
     <string name="edit_review">Edit Review</string>
     <string name="delete_review">Delete Review</string>
+
+
+    <string name="reminding">Reminding</string>
+    <string name="reminding_content">pleaze check your GPS</string>
+    <string name="pos_mess">i open it.</string>
+    <string name="neg_mess">I\'m already opened it</string>
+    <string name="current_location_map">My Current Location Is Here!!</string>
+    <string name="notes">Notes</string>
+    <string name="notes_txt">Notes about provider service:</string>
+    <string name="notes_edit_text">write your notes here</string>
+    <string name="send_notes">Send Note</string>
+    <string name="report">Report</string>
+    <string name="report_problem_about">Rebort a problem about :</string>
+    <string name="report_proplem_value">write here the reason:</string>
+    <string name="bonus_currency">10 $ USD.</string>
 </resources>

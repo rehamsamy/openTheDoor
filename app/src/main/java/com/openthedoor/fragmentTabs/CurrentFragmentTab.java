@@ -1,6 +1,7 @@
 package com.openthedoor.fragmentTabs;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.openthedoor.Adapter.CurrentTabAdapter;
+import com.openthedoor.CancelService;
 import com.openthedoor.R;
 import com.openthedoor.interfaces.RecyclerOnItemClickListner;
 
@@ -87,6 +89,8 @@ public class CurrentFragmentTab extends Fragment {
         cancelService_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent=new Intent(getContext(), CancelService.class);
+                startActivity(intent);
                 myDialog.dismiss();
                 Toast.makeText(getActivity(), "Cancel Service ..." + position, Toast.LENGTH_SHORT).show();
             }

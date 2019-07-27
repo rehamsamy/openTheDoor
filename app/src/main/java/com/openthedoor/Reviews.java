@@ -158,8 +158,12 @@ public class Reviews extends AppCompatActivity implements ReviewAdapter.OnItemIn
 
         item= reviews.get(position);
 
-        registerForContextMenu(holder.itemView);
-
+        if(item.getUserId()==LoginActivity.user.getId()) {
+            registerForContextMenu(holder.itemView);
+        }
+        else{
+            return;
+        }
 
     }
 

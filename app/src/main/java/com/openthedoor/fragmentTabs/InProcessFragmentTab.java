@@ -2,6 +2,7 @@ package com.openthedoor.fragmentTabs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -32,7 +33,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.openthedoor.Adapter.InProcessTabAdapter;
+import com.openthedoor.NotesActivity;
 import com.openthedoor.R;
+import com.openthedoor.ReportProblemActivity;
 import com.openthedoor.interfaces.RecyclerOnItemClickListner;
 
 public class InProcessFragmentTab extends Fragment {
@@ -92,9 +95,32 @@ public class InProcessFragmentTab extends Fragment {
             }
         });
 
+
+        addNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), NotesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        reportProblem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), ReportProblemActivity.class);
+                startActivity(intent);
+            }
+        });
+
         myDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
+
+
+
     }
+
+
+
 
 }

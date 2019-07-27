@@ -1,6 +1,7 @@
 package com.openthedoor;
 
 import android.content.Intent;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +46,7 @@ public class AddReview extends AppCompatActivity {
     Button add_review_btn;
     RetrofitInterface retrofitInterface;
     String review;
+    @BindView(R.id.addReview_layout) TextInputLayout reviewInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +55,22 @@ public class AddReview extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent=getIntent();
-        if(intent==null){
-            return;
-        }else {
+        if(getIntent().hasExtra("review_model")){
             ReviewsItem item = intent.getParcelableExtra("review_model");
             review = item.getNotes();
+            Log.v(TAG,"revvvv"+review.toString()+item);
             userName_txtV.setText(item.getUserName());
-            review_ed.setMaxLines(10);
-            review_ed.setText(review);
-           final String rev=review_ed.getText().toString();
-
+            reviewInput.getEditText().setText(review);
 
             add_review_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    editReview(rev);
+                    editReview();
                 }
             });
+
+        }else {
+           return;
         }
 
     }
@@ -97,8 +98,12 @@ public class AddReview extends AppCompatActivity {
            @Override
            public void onResponse(Call<AddReviewResponse> call, Response<AddReviewResponse> response) {
                Log.v(TAG,"add reviewwwwww"+response.body().toString());
-               Toast.makeText(getApplicationContext(),response.body().getSuccessMsg(),Toast.LENGTH_LONG).show();
-               review_ed.setText("");
+               if(response.body().isStatus()) {
+                   Toast.makeText(getApplicationContext(), response.body().getSuccessMsg(), Toast.LENGTH_LONG).show();
+                   review_ed.setText("");
+                   finish();
+                   startActivity(new Intent(AddReview.this, Reviews.class));
+               }
            }
 
            @Override
@@ -111,26 +116,34 @@ public class AddReview extends AppCompatActivity {
 
     }
 
-    private void editReview(String review) {
+
+
+    private void editReview() {
         retrofitInterface=RetrofitClientInstance.getRetrofitInstance();
 
         Intent intent=getIntent();
       ReviewsItem item= intent.getParcelableExtra("review_model");
         String note=item.getNotes();
+        String rev=reviewInput.getEditText().getText().toString();
 
         Map<String,Object> map=new HashMap<>();
-        map.put("notes",review);
+        map.put("notes",rev);
         map.put("rate",item.getRate());
         map.put("api_token",LoginActivity.userResponse.getToken());
         map.put("provider_id",item.getProviderId());
-        map.put("user_id",LoginActivity.userResponse.getUser().getId());
+        map.put("user_id",item.getUserId());
         map.put("review_id",item.getId());
       Call<EditReviewResponse> call=  retrofitInterface.editReview(map);
       call.enqueue(new Callback<EditReviewResponse>() {
           @Override
           public void onResponse(Call<EditReviewResponse> call, Response<EditReviewResponse> response) {
               Log.v(TAG,"edit reviewwwww"+response.body().toString());
-              Toast.makeText(getApplicationContext(),""+response.body().getSuccessMsg(),Toast.LENGTH_LONG).show();
+              if(response.body().isStatus()) {
+                  Toast.makeText(getApplicationContext(), "" + response.body().getSuccessMsg(), Toast.LENGTH_LONG).show();
+                  finish();
+                  startActivity(new Intent(AddReview.this,Reviews.class));
+
+              }
           }
 
           @Override
@@ -140,5 +153,8 @@ public class AddReview extends AppCompatActivity {
       });
 
     }
+
+
+
 
 }

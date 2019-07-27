@@ -92,10 +92,11 @@
                 android:hint="@string/search" />
         </LinearLayout>
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/map_view"
+        <fragment
+            android:id="@+id/map"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toTopOf="@+id/current_location_txtV_id"
             app:layout_constraintEnd_toEndOf="parent"

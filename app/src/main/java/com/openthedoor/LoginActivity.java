@@ -2,6 +2,7 @@ package com.openthedoor;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -49,8 +50,12 @@ public class LoginActivity extends AppCompatActivity {
    @BindView(R.id.confirm_password_input_layout) TextInputLayout passwordInput;
     Button sign_in;
 
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
-     @Override
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -61,9 +66,9 @@ public class LoginActivity extends AppCompatActivity {
         sign_in=(Button) findViewById(R.id.sign_in);
         sign_up=(TextView) findViewById(R.id.sign_up);
 
-
-
-
+        preferences=getSharedPreferences("my_file",MODE_PRIVATE);
+       phoneInput.getEditText().setText(preferences.getString("phone",null));
+       passwordInput.getEditText().setText(preferences.getString("password",null));
 
 
         sign_up.setOnClickListener(new View.OnClickListener() {
@@ -153,4 +158,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        editor=preferences.edit();
+      editor.putString("phone",phoneInput.getEditText().getText().toString());
+      editor.putString("password",passwordInput.getEditText().getText().toString());
+      editor.commit();
+      editor.apply();
+
+    }
 }
